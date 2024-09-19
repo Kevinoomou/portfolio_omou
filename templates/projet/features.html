@@ -1,0 +1,282 @@
+{% extends 'basez.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Taclo- Fonctionnalités</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .feature-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+    </style>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+     
+    
+      <main class="container mx-auto px-4 py-8">
+        <section class="text-center mb-16">
+          <h1 class="text-4xl font-bold mb-4">Caractéristiques de Taclo</h1>
+          <p class="text-xl text-gray-600 mb-8">Découvrez pourquoi Taclo est la meilleure plateforme e-commerce pour vos besoins</p>
+        </section>
+    
+        <section id="features" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-truck text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">Expédition rapide</h3>
+            <p class="text-gray-600">GFaites livrer vos produits rapidement et efficacement grâce à notre réseau logistique optimisé.</p>
+          </div>
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-undo text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">
+              Retours faciles</h3>
+            <p class="text-gray-600">Vous n’êtes pas satisfait ? Retournez vos articles sans tracas dans les 30 jours, sans poser de questions.</p>
+          </div>
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-lock text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">Paiements sécurisés</h3>
+            <p class="text-gray-600">Achetez en toute confiance grâce à notre système de paiement crypté, prenant en charge plusieurs méthodes de paiement.</p>
+          </div>
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-users text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">2Assistance clientèle 24h/24 et 7j/7</h3>
+            <p class="text-gray-600">Notre équipe d’assistance dédiée est toujours prête à vous aider pour toute question ou préoccupation.</p>
+          </div>
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-mobile-alt text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">Adapté aux mobiles</h3>
+            <p class="text-gray-600">Profitez d’une expérience d’achat fluide sur n’importe quel appareil grâce à notre conception réactive.</p>
+          </div>
+          <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+            <i class="fas fa-gift text-4xl text-indigo-600 mb-4"></i>
+            <h3 class="text-2xl font-semibold mb-2">Programme de fidélité</h3>
+            <p class="text-gray-600">Accumulez des points sur chaque achat et échangez-les contre des remises et des offres exclusives.</p>
+          </div>
+        </section>
+    
+        <section class="mt-16 text-center">
+          <h2 class="text-3xl font-bold mb-4">Prêt à découvrir Taclo ?</h2>
+          <a href="#" class="gradient-bg text-white px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 inline-block">Achetez maintenant</a>
+        </section>
+      </main>
+    
+     
+      <div id="cartModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Your Cart</h3>
+            <div class="mt-2 px-7 py-3">
+              <ul id="cartItems" class="divide-y divide-gray-200">
+                <!-- Cart items will be inserted here -->
+              </ul>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <p class="text-lg font-semibold">Total: $<span id="cartTotal">0</span></p>
+              <button id="checkoutButton" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                Checkout
+              </button>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="closeCartButton" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="cartModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Your Cart</h3>
+            <div class="mt-2 px-7 py-3">
+              <ul id="cartItems" class="divide-y divide-gray-200">
+                <!-- Cart items will be inserted here -->
+              </ul>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <p class="text-lg font-semibold">Total: $<span id="cartTotal">0</span></p>
+              <button id="checkoutButton" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                Checkout
+              </button>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="closeCartButton" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <script>
+        // Animate feature cards on scroll
+        function animateFeatures() {
+          gsap.from(".feature-card", {
+            duration: 0.8,
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: "#features",
+              start: "top 80%",
+            },
+          });
+        }
+    
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+          animateFeatures();
+        });
+    
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+      </script>
+      <script>
+        const products = [
+          { id: 1, name: "Smartphone X", price: 599.99, image: "https://via.placeholder.com/150" },
+          { id: 2, name: "Laptop Pro", price: 1299.99, image: "https://via.placeholder.com/150" },
+          { id: 3, name: "Wireless Earbuds", price: 149.99, image: "https://via.placeholder.com/150" },
+          { id: 4, name: "Smart Watch", price: 249.99, image: "https://via.placeholder.com/150" },
+          { id: 5, name: "4K TV", price: 799.99, image: "https://via.placeholder.com/150" },
+          { id: 6, name: "Gaming Console", price: 499.99, image: "https://via.placeholder.com/150" },
+        ];
+    
+        const cart = [];
+        let cartTotal = 0;
+    
+        function displayProducts() {
+          const productGrid = document.getElementById('productGrid');
+          productGrid.innerHTML = '';
+          products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'bg-white p-6 rounded-lg shadow-md flex flex-col justify-between';
+            productCard.innerHTML = `
+              <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover mb-4 rounded">
+              <h4 class="text-xl font-semibold mb-2">${product.name}</h4>
+              <p class="text-gray-600 mb-4">$${product.price.toFixed(2)}</p>
+              <button class="addToCart gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90 transition duration-300" data-id="${product.id}">
+                Add to Cart
+              </button>
+            `;
+            productGrid.appendChild(productCard);
+          });
+        }
+    
+        function updateCart() {
+          const cartItems = document.getElementById('cartItems');
+          const cartCount = document.getElementById('cartCount');
+          const cartTotal = document.getElementById('cartTotal');
+          
+          cartItems.innerHTML = '';
+          let total = 0;
+          
+          cart.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'py-2';
+            li.innerHTML = `
+              <div class="flex justify-between items-center">
+                <span>${item.name} (x${item.quantity})</span>
+                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+              </div>
+            `;
+            cartItems.appendChild(li);
+            total += item.price * item.quantity;
+          });
+    
+          cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+          cartTotal.textContent = total.toFixed(2);
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+          displayProducts();
+    
+          const productGrid = document.getElementById('productGrid');
+          productGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('addToCart')) {
+              const productId = parseInt(e.target.getAttribute('data-id'));
+              const product = products.find(p => p.id === productId);
+              const cartItem = cart.find(item => item.id === productId);
+              
+              if (cartItem) {
+                cartItem.quantity += 1;
+              } else {
+                cart.push({ ...product, quantity: 1 });
+              }
+              
+              updateCart();
+            }
+          });
+    
+          const cartButton = document.getElementById('cartButton');
+          const cartModal = document.getElementById('cartModal');
+          const closeCartButton = document.getElementById('closeCartButton');
+          
+          cartButton.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+          });
+    
+          closeCartButton.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+          });
+    
+          const checkoutButton = document.getElementById('checkoutButton');
+          checkoutButton.addEventListener('click', () => {
+            if (cart.length > 0) {
+              alert('Thank you for your purchase! Your order has been placed.');
+              cart.length = 0;
+              updateCart();
+              cartModal.classList.add('hidden');
+            } else {
+              alert('Your cart is empty. Add some items before checking out.');
+            }
+          });
+    
+          const signInButton = document.querySelector('button:contains("Sign In")');
+          const signInModal = document.getElementById('signInModal');
+          const closeSignInButton = document.getElementById('closeSignInButton');
+          const signInForm = document.getElementById('signInForm');
+    
+          signInButton.addEventListener('click', () => {
+            signInModal.classList.remove('hidden');
+          });
+    
+          closeSignInButton.addEventListener('click', () => {
+            signInModal.classList.add('hidden');
+          });
+    
+          signInForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Sign-in successful!');
+            signInModal.classList.add('hidden');
+          });
+        });
+      </script>
+    </body></html>
+{% endblock %}

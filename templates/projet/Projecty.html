@@ -1,0 +1,142 @@
+{% extends 'basey.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LinkMaster - Raccourcisseur URL & Generateur URL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+    </style>
+    </head>
+    <body class="bg-gray-50 min-h-screen flex flex-col">
+      <header class="bg-white shadow-sm">
+        
+      </header>
+    
+      <main class="flex-grow container mx-auto px-6 py-8">
+        <section class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">Raccourcissez et personnalisez vos URL</h1>
+          <p class="text-xl text-gray-600">Créez des liens puissants et reconnaissables en quelques secondes.</p>
+        </section>
+    
+        <section class="max-w-3xl mx-auto mb-12">
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <form id="url-form" class="space-y-4">
+              <div>
+                <label for="long-url" class="block text-sm font-medium text-gray-700">Entrez votre URL longue</label>
+                <input type="url" id="long-url" name="long-url" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+              </div>
+              <div>
+                <label for="custom-alias" class="block text-sm font-medium text-gray-700">Alias personnalisé (facultatif)</label>
+                <div class="mt-1 flex rounded-md shadow-sm">
+                  <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                    linkmaster.com/
+                  </span>
+                  <input type="text" id="custom-alias" name="custom-alias" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+              </div>
+              <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white gradient-bg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Raccourcir l’URL
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+    
+        <section id="result" class="max-w-3xl mx-auto mb-12 hidden">
+          <div class="bg-green-50 border-l-4 border-green-400 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-green-700">
+                  Your shortened URL is ready!
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 bg-white rounded-lg shadow-md p-4">
+            <p class="text-sm text-gray-600 mb-2">Shortened URL:</p>
+            <div class="flex items-center">
+              <input type="text" id="shortened-url" readonly class="flex-grow mr-2 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <button onclick="copyToClipboard()" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-md hover:bg-indigo-200 transition duration-300">
+                Copy
+              </button>
+            </div>
+          </div>
+        </section>
+    
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Pourquoi choisir LinkMaster ?</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="text-indigo-500 mb-4">
+                <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Rapide comme l’éclair</h3>
+              <p class="text-gray-600">Générez des liens courts en quelques millisecondes et redirigez les utilisateurs instantanément.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="text-indigo-500 mb-4">
+                <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Personnalisable</h3>
+              <p class="text-gray-600">Créez des liens de marque avec des alias et des domaines personnalisés.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="text-indigo-500 mb-4">
+                <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Analyses détaillées</h3>
+              <p class="text-gray-600">Suivez les clics, les données géographiques et bien plus encore grâce à nos puissantes analyses.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    
+    
+      <script>
+        const form = document.getElementById('url-form');
+        const result = document.getElementById('result');
+        const shortenedUrlInput = document.getElementById('shortened-url');
+    
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const longUrl = document.getElementById('long-url').value;
+          const customAlias = document.getElementById('custom-alias').value;
+          
+          // Simulate API call
+          setTimeout(() => {
+            const shortUrl = customAlias ? `https://linkmaster.com/${customAlias}` : `https://linkmaster.com/${Math.random().toString(36).substr(2, 6)}`;
+            shortenedUrlInput.value = shortUrl;
+            result.classList.remove('hidden');
+          }, 1000);
+        });
+    
+        function copyToClipboard() {
+          shortenedUrlInput.select();
+          document.execCommand('copy');
+          alert('Copied to clipboard!');
+        }
+      </script>
+    </body></html>
+{% endblock %}

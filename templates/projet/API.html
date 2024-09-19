@@ -1,0 +1,201 @@
+{% extends 'basey.html' %}
+{% load static %}
+{% block content %}
+<html><head><base ">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LinkMaster API Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-json.min.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+    </style>
+    </head>
+    <body >
+      
+    
+      <main class="flex-grow container mx-auto px-6 py-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8">Documentation de l’API</h1>
+    
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <nav class="md:col-span-1 space-y-1">
+            <a href="#introduction" class="block px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300">Introduction</a>
+            <a href="#authentication" class="block px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300">Authentication</a>
+            <a href="#endpoints" class="block px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300">Terminaison</a>
+            <a href="#rate-limiting" class="block px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300">Limitation du débit</a>
+            <a href="#errors" class="block px-4 py-2 rounded-md hover:bg-indigo-50 transition duration-300">Erreurs</a>
+          </nav>
+    
+          <div class="md:col-span-3 space-y-8">
+            <section id="introduction">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Introduction</h2>
+              <p class="text-gray-600 mb-4">
+                Bienvenue dans la documentation de l’API LinkMaster. Notre API vous permet de créer, de gérer et d’analyser de manière programmatique des URL raccourcies. Ce guide vous aidera à intégrer LinkMaster dans vos applications.
+              </p>
+              <p class="text-gray-600">
+                L’URL de base pour toutes les demandes d’API est la suivante :              </p>
+              <pre><code class="language-bash">https://api.linkmaster.com/v1</code></pre>
+            </section>
+    
+            <section id="authentication">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Authentication</h2>
+              <p class="text-gray-600 mb-4">
+                Pour utiliser l’API LinkMaster, vous devez authentifier vos requêtes à l’aide d’une clé API. Vous pouvez obtenir votre clé API à partir du tableau de bord de votre compte.
+              </p>
+              <p class="text-gray-600 mb-4">
+                Incluez votre clé API dans l’en-tête de chaque requête :
+
+
+              </p>
+              <pre><code class="language-bash">Authorization: Bearer YOUR_API_KEY</code></pre>
+            </section>
+    
+            <section id="endpoints">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Terminaison</h2>
+              
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Créer une URL courte</h3>
+                  <p class="text-gray-600 mb-2">POST /raccourcir</p>
+                  <pre><code class="language-json">{
+      "long_url": "https://example.com/very/long/url",
+      "custom_alias": "my-custom-alias" // Optional
+    }</code></pre>
+                  <p class="text-gray-600 mt-2">Réponse:</p>
+                  <pre><code class="language-json">{
+      "short_url": "https://lnkm.st/abcdef",
+      "long_url": "https://example.com/very/long/url",
+      "created_at": "2023-06-01T12:00:00Z"
+    }</code></pre>
+                </div>
+    
+                <div>
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Obtenir les détails de l’URL</h3>
+                  <p class="text-gray-600 mb-2">OBTENIR /urls/{short_code}</p>
+                  <p class="text-gray-600 mt-2">Réponse:
+
+                  </p>
+                  <pre><code class="language-json">{
+      "short_url": "https://lnkm.st/abcdef",
+      "long_url": "https://example.com/very/long/url",
+      "created_at": "2023-06-01T12:00:00Z",
+      "total_clicks": 42,
+      "last_clicked_at": "2023-06-02T15:30:00Z"
+    }</code></pre>
+                </div>
+    
+                <div>
+                  <h3 class="text-xl font-semibold text-gray-800 mb-2">Obtenir Click Analytics</h3>
+                  <p class="text-gray-600 mb-2">GET /urls/{short_code}/analytics</p>
+                  <p class="text-gray-600 mt-2">Réponse:</p>
+                  <pre><code class="language-json">{
+      "total_clicks": 42,
+      "countries": [
+        {"country": "US", "clicks": 20},
+        {"country": "GB", "clicks": 12},
+        {"country": "CA", "clicks": 10}
+      ],
+      "referrers": [
+        {"referrer": "twitter.com", "clicks": 15},
+        {"referrer": "facebook.com", "clicks": 12},
+        {"referrer": "linkedin.com", "clicks": 8}
+      ],
+      "devices": [
+        {"device": "mobile", "clicks": 25},
+        {"device": "desktop", "clicks": 15},
+        {"device": "tablet", "clicks": 2}
+      ]
+    }</code></pre>
+                </div>
+              </div>
+            </section>
+    
+            <section id="rate-limiting">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Limitation du débit</h2>
+              <p class="text-gray-600 mb-4">
+                L’API LinkMaster met en œuvre une limitation de débit pour garantir une utilisation équitable. Les limites actuelles sont les suivantes :
+              </p>
+              <ul class="list-disc list-inside text-gray-600 mb-4">
+                <li>100 requêtes par minute pour les comptes gratuits</li>
+                <li>1000 requêtes par minute pour les comptes premium</li>
+              </ul>
+              <p class="text-gray-600">
+                Si vous dépassez la limite de débit, vous recevrez une réponse 429 Too Many Requests. La réponse comprendra des en-têtes indiquant l’état actuel de votre limite de débit :
+              </p>
+              <pre><code class="language-bash">X-RateLimit-Limit: 100
+    X-RateLimit-Remaining: 0
+    X-RateLimit-Reset: 1623456789</code></pre>
+            </section>
+    
+            <section id="errors">
+              <h2 class="text-2xl font-semibold text-gray-800 mb-4">Erreurs</h2>
+              <p class="text-gray-600 mb-4">
+                L’API LinkMaster utilise des codes de réponse HTTP conventionnels pour indiquer le succès ou l’échec d’une requête API :
+              </p>
+              <ul class="list-disc list-inside text-gray-600 mb-4">
+                <li>202 : Succès</li>
+                <li>400 : Erreur qui a échoué compte tenu des informations fournies</li>
+                <li>502 : Erreur qui s’est produite sur nos serveurs</li>
+              </ul>
+              <p class="text-gray-600 mb-4">
+                Les réponses d’erreur incluront un objet JSON avec plus de détails :
+              </p>
+              <pre><code class="language-json">{
+      "error": {
+        "code": "invalid_request",
+        "message": "The request was invalid. Please check your parameters and try again."
+      }
+    }</code></pre>
+            </section>
+          </div>
+        </div>
+      </main>
+    
+     
+    
+      <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+    
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+    
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+          const sections = document.querySelectorAll('section');
+          const navLinks = document.querySelectorAll('nav a');
+    
+          let current = '';
+    
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - sectionHeight / 3) {
+              current = section.getAttribute('id');
+            }
+          });
+    
+          navLinks.forEach(link => {
+            link.classList.remove('text-indigo-600', 'font-semibold');
+            if (link.getAttribute('href').substring(1) === current) {
+              link.classList.add('text-indigo-600', 'font-semibold');
+            }
+          });
+        });
+      </script>
+    </body></html>
+{% endblock %}

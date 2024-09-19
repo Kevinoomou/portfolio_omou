@@ -1,0 +1,281 @@
+{% extends 'basez.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Taclo - Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+      
+    
+      <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Nos produits
+        </h1>
+    
+        <div class="mb-8">
+          <input type="text" id="searchInput" placeholder="Rechercher un  produits..." class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+    
+        <div class="flex flex-wrap -mx-4 mb-8">
+          <div class="w-full md:w-1/4 px-4 mb-4">
+            <h2 class="text-xl font-semibold mb-4">Categories</h2>
+            <div id="categoryFilters" class="space-y-2">
+              <!-- Category filters will be dynamically inserted here -->
+            </div>
+          </div>
+          <div class="w-full md:w-3/4 px-4">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <label for="sortSelect" class="mr-2">Trier par :</label>
+                <select id="sortSelect" class="px-2 py-1 border rounded">
+                    <option value="name">Nom</option>
+                    <option value="price-low">Prix : Croissant</option>
+                    <option value="price-high">Prix : Décroissant</option>
+                </select>
+            </div>
+              <div>
+                <button id="gridViewBtn" class="px-2 py-1 bg-gray-200 rounded mr-2"><i class="fas fa-th"></i></button>
+                <button id="listViewBtn" class="px-2 py-1 bg-gray-200 rounded"><i class="fas fa-list"></i></button>
+              </div>
+            </div>
+            <div id="productGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <!-- Product cards will be dynamically inserted here -->
+            </div>
+          </div>
+        </div>
+    
+        <div class="flex justify-center">
+          <button id="loadMoreBtn" class="gradient-bg text-white px-6 py-2 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300">Voir Plus</button>
+        </div>
+      </main>
+    
+
+    
+      <!-- Cart Modal -->
+      <div id="cartModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Votre Panier</h3>
+            <div class="mt-2 px-7 py-3">
+              <ul id="cartItems" class="divide-y divide-gray-200">
+                <!-- Cart items will be inserted here -->
+              </ul>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <p class="text-lg font-semibold">Total: Fcfa<span id="cartTotal">0</span></p>
+              <button id="checkoutButton" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                Passer à la caisse
+              </button>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="closeCartButton" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <script>
+        const produits = [
+            { id: 1, nom: "Smartphone X", prix: 599.99, image: "{% static 'images/product/iphone.png' %}", categorie: "Électronique" },
+            { id: 2, nom: "Ordinateur Portable Pro", prix: 1299.99, image: "{% static 'images/product/ordi.png' %}", categorie: "Électronique" },
+            { id: 3, nom: "Écouteurs Sans Fil", prix: 149.99, image: "{% static 'images/product/ps.png' %}", categorie: "Audio" },
+            { id: 4, nom: "Montre Connectée", prix: 249.99, image: "{% static 'images/product/watch.png' %}", categorie: "Wearables" },
+            { id: 5, nom: "TV 4K", prix: 799.99, image: "{% static 'images/product/tv.png' %}", categorie: "Électronique" },
+            { id: 6, nom: "Console de Jeu", prix: 499000.99, image: "{% static 'images/product/ps.png' %}", categorie: "Jeux" },
+            { id: 7, nom: "Appareil Photo Numérique", prix: 699.99, image: "{% static 'images/product/ps.png' %}", categorie: "Photographie" },
+            { id: 8, nom: "Enceinte Bluetooth", prix: 79.99, image: "{% static 'images/product/ps.png' %}", categorie: "Audio" },
+            { id: 9, nom: "Suivi Fitness", prix: 99.99, image: "{% static 'images/product/ps.png' %}", categorie: "Wearables" },
+            { id: 10, nom: "Tablette", prix: 349.99, image: "{% static 'images/product/ps.png' %}", categorie: "Électronique" },
+            { id: 11, nom: "Hub Maison Connectée", prix: 129.99, image: "{% static 'images/product/ps.png' %}", categorie: "Maison Connectée" },
+            { id: 12, nom: "Chargeur Portable", prix: 49.99, image: "{% static 'images/product/ps.png' %}", categorie: "Accessoires" },
+        ];
+    
+        const panier = [];
+        let vueActuelle = 'grille';
+        let triActuel = 'nom';
+        let categorieActuelle = 'Tous';
+        let rechercheActuelle = '';
+    
+        function afficherProduits() {
+            const grilleProduits = document.getElementById('productGrid');
+            grilleProduits.innerHTML = '';
+    
+            let produitsFiltres = produits.filter(produit =>
+                (categorieActuelle === 'Tous' || produit.categorie === categorieActuelle) &&
+                produit.nom.toLowerCase().includes(rechercheActuelle.toLowerCase())
+            );
+    
+            produitsFiltres.sort((a, b) => {
+                if (triActuel === 'nom') {
+                    return a.nom.localeCompare(b.nom);
+                } else if (triActuel === 'prix-bas') {
+                    return a.prix - b.prix;
+                } else if (triActuel === 'prix-haut') {
+                    return b.prix - a.prix;
+                }
+            });
+    
+            produitsFiltres.forEach(produit => {
+                const carteProduit = document.createElement('div');
+                carteProduit.className = vueActuelle === 'grille' ? 'bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 project-card flex flex-col justify-between' : 'bg-white p-6 rounded-lg shadow-md flex justify-between items-center mb-4';
+                carteProduit.innerHTML = `
+                    <img src="${produit.image}" alt="${produit.nom}" class="${vueActuelle === 'grille' ? 'w-full h-40 object-cover mb-4 rounded' : 'w-24 h-24 object-cover rounded mr-4'}">
+                    <div class="${vueActuelle === 'grille' ? '' : 'flex-grow'}">
+                        <h4 class="text-xl font-semibold mb-2">${produit.nom}</h4>
+                        <p class="text-gray-600 mb-4">${produit.prix.toFixed(2)+ ' Fcfa'}</p>
+                    </div>
+                    
+                    <div class="flex justify-center items-center">
+                      <button class="addToCart w-50   gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90 transition duration-300" data-id="${produit.id}">
+                      Ajouter au panier
+                      </button>
+                    </div>
+                `;
+                grilleProduits.appendChild(carteProduit);
+            });
+        }
+    
+        function mettreAJourPanier() {
+            const itemsPanier = document.getElementById('cartItems');
+            const comptePanier = document.getElementById('cartCount');
+            const totalPanier = document.getElementById('cartTotal');
+    
+            itemsPanier.innerHTML = '';
+            let total = 0;
+    
+            panier.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'py-2';
+                li.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span>${item.nom} (x${item.quantity})</span>
+                        <span>$${(item.prix * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+                itemsPanier.appendChild(li);
+                total += item.prix * item.quantity;
+            });
+    
+            comptePanier.textContent = panier.reduce((sum, item) => sum + item.quantity, 0);
+            totalPanier.textContent = total.toFixed(2);
+        }
+    
+        function afficherCategories() {
+            const filtresCategories = document.getElementById('categoryFilters');
+            const categories = ['Tous', ...new Set(produits.map(produit => produit.categorie))];
+    
+            categories.forEach(categorie => {
+                const bouton = document.createElement('button');
+                bouton.textContent = categorie;
+                bouton.className = `px-3 py-1 rounded ${categorie === categorieActuelle ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-800'} hover:bg-indigo-500 hover:text-white transition duration-300`;
+                bouton.addEventListener('click', () => {
+                    categorieActuelle = categorie;
+                    afficherProduits();
+                    afficherCategories();
+                });
+                filtresCategories.appendChild(bouton);
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            afficherProduits();
+            afficherCategories();
+    
+            const grilleProduits = document.getElementById('productGrid');
+            grilleProduits.addEventListener('click', (e) => {
+                if (e.target.classList.contains('ajouterAuPanier')) {
+                    const idProduit = parseInt(e.target.getAttribute('data-id'));
+                    const produit = produits.find(p => p.id === idProduit);
+                    const itemPanier = panier.find(item => item.id === idProduit);
+    
+                    if (itemPanier) {
+                        itemPanier.quantity += 1;
+                    } else {
+                        panier.push({ ...produit, quantity: 1 });
+                    }
+    
+                    mettreAJourPanier();
+                }
+            });
+    
+            const boutonPanier = document.getElementById('cartButton');
+            const modalPanier = document.getElementById('cartModal');
+            const boutonFermerPanier = document.getElementById('closeCartButton');
+    
+            boutonPanier.addEventListener('click', () => {
+                modalPanier.classList.remove('hidden');
+            });
+    
+            boutonFermerPanier.addEventListener('click', () => {
+                modalPanier.classList.add('hidden');
+            });
+    
+            const boutonCheckout = document.getElementById('checkoutButton');
+            boutonCheckout.addEventListener('click', () => {
+                if (panier.length > 0) {
+                    alert('Merci pour votre achat ! Votre commande a été passée.');
+                    panier.length = 0;
+                    mettreAJourPanier();
+                    modalPanier.classList.add('hidden');
+                } else {
+                    alert('Votre panier est vide. Ajoutez des articles avant de passer à la caisse.');
+                }
+            });
+    
+            const boutonVueGrille = document.getElementById('gridViewBtn');
+            const boutonVueListe = document.getElementById('listViewBtn');
+    
+            boutonVueGrille.addEventListener('click', () => {
+                vueActuelle = 'grille';
+                grilleProduits.className = 'grid grid-cols-1 md:grid-cols-3 gap-8';
+                afficherProduits();
+            });
+    
+            boutonVueListe.addEventListener('click', () => {
+                vueActuelle = 'liste';
+                grilleProduits.className = 'space-y-4';
+                afficherProduits();
+            });
+    
+            const selectTri = document.getElementById('sortSelect');
+            selectTri.addEventListener('change', (e) => {
+                triActuel = e.target.value;
+                afficherProduits();
+            });
+    
+            const champRecherche = document.getElementById('searchInput');
+            champRecherche.addEventListener('input', (e) => {
+                rechercheActuelle = e.target.value;
+                afficherProduits();
+            });
+    
+            const boutonChargerPlus = document.getElementById('loadMoreBtn');
+            boutonChargerPlus.addEventListener('click', () => {
+                // Dans une application réelle, cela chargerait plus de produits depuis le serveur
+                alert('Dans une application réelle, cela chargerait plus de produits depuis le serveur.');
+            });
+        });
+    </script>
+    
+      
+    </body></html>
+{% endblock %}

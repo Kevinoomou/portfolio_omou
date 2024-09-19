@@ -1,0 +1,231 @@
+{% extends 'basez.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Taclo - E-commerce Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+    </head>
+    <body class="bg-gray-100  text-gray-800">
+
+    
+      <main class="container mx-auto px-4 py-8">
+        <section class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4">Bienvenue à Taclo</h2>
+          <p class="text-xl text-gray-600 mb-8">Votre guichet unique pour des produits exceptionnels
+
+          </p>
+          <a href="#products" class="gradient-bg text-white px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 inline-block">Achetez maintenant</a>
+        </section>
+    
+        <section id="products" class="mb-16">
+          <h3 class="text-2xl font-bold mb-6 text-center">Produits en vedette</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="productGrid">
+            <!-- Product cards will be dynamically inserted here -->
+          </div>
+        </section>
+    
+        <section id="features" class="mb-16">
+          <h3 class="text-2xl font-bold mb-6 text-center">Pourquoi choisir Taclo</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+              <i class="fas fa-truck text-4xl text-indigo-600 mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">Expédition rapide</h4>
+              <p class="text-gray-600">Faites livrer vos produits rapidement et efficacement.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+              <i class="fas fa-undo text-4xl text-indigo-600 mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">Retours faciles</h4>
+              <p class="text-gray-600">Vous n’êtes pas satisfait ? Retournez vos articles sans tracas dans les 30 jours.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md text-center">
+              <i class="fas fa-lock text-4xl text-indigo-600 mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">Paiements sécurisés</h4>
+              <p class="text-gray-600">Achetez en toute confiance grâce à notre système de paiement crypté.</p>
+            </div>
+          </div>
+        </section>
+    
+        <section id="newsletter" class="bg-indigo-100 p-8 rounded-lg mb-16">
+          <h3 class="text-2xl font-bold mb-4 text-center">Restez à jour</h3>
+          <p class="text-center mb-4">Abonnez-vous à notre newsletter pour recevoir des offres exclusives et des mises à jour.</p>
+          <form class="flex flex-col md:flex-row justify-center items-center">
+            <input type="email" placeholder="Entrer  votre email" class="px-4 py-2 mb-2 md:mb-0 md:mr-2 rounded-md w-full md:w-auto">
+            <button type="submit" class="gradient-bg text-white px-6 py-2 rounded-md hover:opacity-90 transition duration-300 w-full md:w-auto">S'abonner</button>
+          </form>
+        </section>
+      </main>
+    
+
+    
+      <!-- Cart Modal -->
+      <div id="cartModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Your Cart</h3>
+            <div class="mt-2 px-7 py-3">
+              <ul id="cartItems" class="divide-y divide-gray-200">
+                <!-- Cart items will be inserted here -->
+              </ul>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <p class="text-lg font-semibold">Total: $<span id="cartTotal">0</span></p>
+              <button id="checkoutButton" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                Checkout
+              </button>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="closeCartButton" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="cartModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Your Cart</h3>
+            <div class="mt-2 px-7 py-3">
+              <ul id="cartItems" class="divide-y divide-gray-200">
+                <!-- Cart items will be inserted here -->
+              </ul>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <p class="text-lg font-semibold">Total: $<span id="cartTotal">0</span></p>
+              <button id="checkoutButton" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                Checkout
+              </button>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="closeCartButton" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <script>
+        const products = [
+          { id: 1, name: "Iphone 16", price: 1600.99, image: "{% static 'images/product/iphone.png' %}" },
+          { id: 2, name: "Ordinateur portable Pro", price: 1299.99, image: "{% static 'images/product/ordi.png' %}" },
+          { id: 3, name: "Écouteurs sans fil", price: 149.99, image: "{% static 'images/product/air.png' %}" },
+          { id: 4, name: "Montre intelligente", price: 249.99, image: "{% static 'images/product/watch.png' %}" },
+          { id: 5, name: "Télévision 4K", price: 799.99, image: "{% static 'images/product/tv.png' %}" },
+          { id: 6, name: "Console de jeu", price: 499.99, image: "{% static 'images/product/ps.png' %}" },
+        ];
+    
+        const cart = [];
+        let cartTotal = 0;
+    
+        function displayProducts() {
+          const productGrid = document.getElementById('productGrid');
+          productGrid.innerHTML = '';
+          products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 project-card flex flex-col justify-between';
+            productCard.innerHTML = `
+              <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover mb-4 rounded">
+              <h4 class="text-xl font-semibold mb-2">${product.name}</h4>
+              <p class="text-gray-600 mb-4">${product.price.toFixed(2)+" Fcfa"}</p>
+              <div class="flex justify-center items-center">
+                <button class="addToCart w-40   gradient-bg text-white px-4 py-2 rounded-md hover:opacity-90 transition duration-300" data-id="${product.id}">
+                Ajouter au panier
+              </button>
+              </div>
+              
+            `;
+            productGrid.appendChild(productCard);
+          });
+        }
+    
+        function updateCart() {
+          const cartItems = document.getElementById('cartItems');
+          const cartCount = document.getElementById('cartCount');
+          const cartTotal = document.getElementById('cartTotal');
+          
+          cartItems.innerHTML = '';
+          let total = 0;
+          
+          cart.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'py-2';
+            li.innerHTML = `
+              <div class="flex justify-between items-center">
+                <span>${item.name} (x${item.quantity})</span>
+                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+              </div>
+            `;
+            cartItems.appendChild(li);
+            total += item.price * item.quantity;
+          });
+    
+          cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+          cartTotal.textContent = total.toFixed(2);
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+          displayProducts();
+    
+          const productGrid = document.getElementById('productGrid');
+          productGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('addToCart')) {
+              const productId = parseInt(e.target.getAttribute('data-id'));
+              const product = products.find(p => p.id === productId);
+              const cartItem = cart.find(item => item.id === productId);
+              
+              if (cartItem) {
+                cartItem.quantity += 1;
+              } else {
+                cart.push({ ...product, quantity: 1 });
+              }
+              
+              updateCart();
+            }
+          });
+    
+          const cartButton = document.getElementById('cartButton');
+          const cartModal = document.getElementById('cartModal');
+          const closeCartButton = document.getElementById('closeCartButton');
+          
+          cartButton.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+          });
+    
+          closeCartButton.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+          });
+    
+          const checkoutButton = document.getElementById('checkoutButton');
+          checkoutButton.addEventListener('click', () => {
+            if (cart.length > 0) {
+              alert('Thank you for your purchase! Your order has been placed.');
+              cart.length = 0;
+              updateCart();
+              cartModal.classList.add('hidden');
+            } else {
+              alert('Your cart is empty. Add some items before checking out.');
+            }
+          });
+        });
+      </script>
+      
+    </body></html>
+{% endblock %}

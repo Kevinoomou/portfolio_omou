@@ -1,0 +1,194 @@
+{% extends 'basey.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LinkMaster Features - Advanced URL Shortener & Link Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+      .feature-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+    </head>
+    <body >
+     
+    
+      <main class="flex-grow container mx-auto px-6 py-8">
+        <section class="text-center mb-12">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">Des fonctionnalités puissantes pour une gestion avancée des liens</h1>
+          <p class="text-xl text-gray-600">Découvrez comment LinkMaster peut révolutionner votre expérience de raccourcissement d’URL et de gestion des liens.</p>
+        </section>
+    
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-bolt text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Raccourcissement instantané de l’URL</h3>
+            <p class="text-gray-600">Créez des liens courts et mémorables en quelques millisecondes grâce à notre traitement ultra-rapide.</p>
+          </div>
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-paint-brush text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Liens de marque personnalisés</h3>
+            <p class="text-gray-600">Utilisez votre propre domaine et créez des URL personnalisées pour renforcer l’identité de votre marque.</p>
+          </div>
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-chart-line text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Analytique avancée</h3>
+            <p class="text-gray-600">Obtenez des informations grâce au suivi détaillé des clics, aux données géographiques et aux informations sur les référents.</p>
+          </div>
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-shield-alt text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Sécurité des liens</h3>
+            <p class="text-gray-600">Protégez vos liens avec une protection par mot de passe et des dates d’expiration.</div>
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-code text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Accès API</h3>
+            <p class="text-gray-600">Intégrez LinkMaster dans vos applications grâce à notre API RESTful robuste.</div>
+          <div class="feature-card bg-white rounded-lg shadow-md p-6">
+            <div class="text-indigo-500 mb-4">
+              <i class="fas fa-users text-4xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Collaboration d’équipe</h3>
+            <p class="text-gray-600">Travaillez ensemble de manière transparente grâce à l’accès multi-utilisateurs et aux autorisations basées sur les rôles.</p>
+          </div>
+        </section>
+    
+        <section class="bg-indigo-100 rounded-lg p-8 mb-12">
+          <h2 class="text-3xl font-bold text-indigo-800 mb-4">Pourquoi choisir LinkMaster ?</h2>
+          <ul class="list-disc list-inside text-indigo-700 space-y-2">
+            <li>Garantie de disponibilité de 99,9 % pour une redirection de liens fiable
+              </li>
+            <li>
+              Cryptage HTTPS pour tous les liens afin d’assurer la sécurité
+             </li>
+            <li>
+              Tableau de bord intuitif pour une gestion facile des liens
+              </li>
+            <li>
+              Création de liens en masse pour les campagnes à grande échelle
+             </li>
+            <li>
+              Génération d’un code QR pour chaque lien raccourci
+              </li>
+            <li>
+              Un support client 24h/24 et 7j/7 pour tous vos besoins
+            </li>
+          
+          </ul>
+        </section>
+    
+        <section class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4">Prêt à commencer ?
+          </h2>
+          <p class="text-xl text-gray-600 mb-6">Rejoignez des milliers d’utilisateurs satisfaits et prenez le contrôle de vos liens dès aujourd’hui.
+
+          </p>
+          <a href="https://demo.jacesmith.com/project-x/signup" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-indigo-700 transition duration-300">Inscrivez-vous gratuitement
+          </a>
+        </section>
+    
+        <section class="bg-white rounded-lg shadow-md p-8">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">Foire aux questions
+          </h2>
+          <div class="space-y-6" x-data="{selected:null}">
+            <div class="border-b border-gray-200 pb-4">
+              <button class="flex items-center justify-between w-full text-left" @click="selected !== 1 ? selected = 1 : selected = null">
+                <span class="text-lg font-medium text-gray-900">Dans quelle mesure les liens raccourcis sont-ils sécurisés ?</span>
+                <span class="ml-6 flex-shrink-0">
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected !== 1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected === 1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                  </svg>
+                </span>
+              </button>
+              <div class="mt-4" x-show="selected === 1">
+                <p class="text-gray-700">Tous les liens raccourcis sont sécurisés par un cryptage HTTPS. Nous proposons également des fonctionnalités de sécurité supplémentaires telles que la protection par mot de passe et l’expiration des liens pour garantir la sécurité de vos liens.
+
+
+                </p>
+              </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+              <button class="flex items-center justify-between w-full text-left" @click="selected !== 2 ? selected = 2 : selected = null">
+                <span class="text-lg font-medium text-gray-900">Puis-je utiliser mon propre domaine personnalisé ?</span>
+                <span class="ml-6 flex-shrink-0">
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected !== 2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected === 2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                  </svg>
+                </span>
+              </button>
+              <div class="mt-4" x-show="selected === 2">
+                <p class="text-gray-700">Oui, LinkMaster prend en charge les domaines personnalisés. Vous pouvez utiliser votre propre domaine de marque pour créer des liens raccourcis, renforçant ainsi votre identité de marque avec chaque URL partagée.
+
+
+                </p>
+              </div>
+            </div>
+            <div class="border-b border-gray-200 pb-4">
+              <button class="flex items-center justify-between w-full text-left" @click="selected !== 3 ? selected = 3 : selected = null">
+                <span class="text-lg font-medium text-gray-900">Quel type d’analyse fournissez-vous ?</span>
+                <span class="ml-6 flex-shrink-0">
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected !== 3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  <svg class="h-6 w-6 text-indigo-500" x-show="selected === 3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                  </svg>
+                </span>
+              </button>
+              <div class="mt-4" x-show="selected === 3">
+                <p class="text-gray-700">Nos analyses incluent le suivi des clics, les données géographiques, les informations sur les référents, les types d’appareils, etc. Vous pouvez afficher des données en temps réel et générer des rapports personnalisés pour obtenir des informations précieuses sur les performances de vos liens.
+
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+  
+    
+      <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+      <script>
+        // Add any additional JavaScript for interactivity here
+        document.addEventListener('DOMContentLoaded', (event) => {
+          // Example: Smooth scroll for anchor links
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+              });
+            });
+          });
+        });
+      </script>
+    </body></html>
+{% endblock %}

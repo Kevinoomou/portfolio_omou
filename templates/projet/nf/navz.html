@@ -1,0 +1,47 @@
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+  
+
+ <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+        <header class="bg-white shadow-md sticky top-0 z-50">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+              <a href="{%url 'ProjectZ'%}" class="text-2xl font-extrabold gradient-text">Taclo</a>
+              <nav class="hidden md:flex space-x-4">
+                <a href="{%url 'ProjectZ'%}" class="text-gray-600 font-extrabold hover:text-gray-900 transition duration-300">Accueil</a>
+                <a href="{%url 'Produits'%}" class="text-gray-600 font-extrabold hover:text-gray-900 transition duration-300">Produits</a>
+                <a href="{%url 'features'%}" class="text-gray-600 font-extrabold hover:text-gray-900 transition duration-300">Fonctionnalités</a>
+                <a href="{%url 'cart'%}" class="text-gray-600 font-extrabold hover:text-gray-900 transition duration-300">Panier</a>
+                <a href="{%url 'home'%}" class="text-gray-600 font-extrabold hover:text-gray-900 transition duration-300">Mon Portfolio</a>
+              </nav>
+              <div class="flex items-center">
+                <button id="cartButton" class="text-gray-600 hover:text-gray-900 transition duration-300 mr-4">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span id="cartCount" class="bg-red-500 text-white rounded-full px-2 py-1 text-xs ml-1">0</span>
+                </button>
+                <button class="gradient-bg text-white px-4 py-2 rounded-full text-sm  hover:opacity-90 transition font-extrabold duration-300">Connexion</button>
+              </div>
+            </div>
+          </header>
+        

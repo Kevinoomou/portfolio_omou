@@ -1,0 +1,435 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html><head><base >
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Superproductivité</title>
+    <script ></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f0f4f8;
+      }
+      .task-list {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .completed {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
+      .fade-in {
+        animation: fadeIn 0.5s;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .slide-in {
+        animation: slideIn 0.3s ease-out;
+      }
+      @keyframes slideIn {
+        from { transform: translateX(-20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+    </style>
+    </head>
+    <body class="bg-gradient-to-r from-blue-50 to-indigo-100 min-h-screen">
+      <header class="bg-blue-200 shadow-md">
+        <nav class="container mx-auto px-6 py-3">
+          <ul class="flex space-x-4">
+            <li><a href="#" class="text-blue-800 hover:text-blue-600 font-medium">Mes Tâches</a></li>
+            <li><a href="#" class="text-blue-800 hover:text-blue-600 font-medium">Projets</a></li>
+            <li><a href="#" class="text-blue-800 hover:text-blue-600 font-medium">Échéances</a></li>
+            <li><a href="{% url 'home'%}" class="text-blue-800 hover:text-blue-600 font-medium">Mon Portfolio</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+          <h1 class="text-4xl font-bold text-indigo-800 mb-2">Superproductivité</h1>
+          <p class="text-xl text-indigo-600">Votre application ultime de gestion des tâches</p>
+        </header>
+    
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Side panel -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-blue-800">Filtres</h2>
+            <div class="space-y-4">
+              <div>
+                <h3 class="font-medium text-blue-700 mb-2">Projet</h3>
+                <select id="filter-project" class="w-full p-2 border border-gray-300 rounded-lg">
+                  <option value="all">Tous les projets</option>
+                  <option value="personal">Personnel</option>
+                  <option value="work">Travail</option>
+                  <option value="study">Étude</option>
+                </select>
+              </div>
+              <div>
+                <h3 class="font-medium text-blue-700 mb-2">Date</h3>
+                <select id="filter-date" class="w-full p-2 border border-gray-300 rounded-lg">
+                  <option value="all">Toutes les dates</option>
+                  <option value="today">Aujourd'hui</option>
+                  <option value="week">Cette semaine</option>
+                  <option value="month">Ce mois</option>
+                </select>
+              </div>
+              <div>
+                <h3 class="font-medium text-blue-700 mb-2">Priorité</h3>
+                <select id="filter-priority" class="w-full p-2 border border-gray-300 rounded-lg">
+                  <option value="all">Toutes les priorités</option>
+                  <option value="high">Élevée</option>
+                  <option value="medium">Moyenne</option>
+                  <option value="low">Faible</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Task Management Column -->
+          <div class="col-span-3 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-indigo-700">Gestion des tâches
+            </h2>
+            <form id="task-form" class="mb-6">
+              <div class="flex items-center mb-4">
+                <input type="text" id="task-input" placeholder="Ajouter une nouvelle tâche..." 
+                       class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <button type="submit" 
+                        class="bg-indigo-500 text-white p-3 rounded-r-lg hover:bg-indigo-600 transition duration-300 ease-in-out">
+                  <i class="fas fa-plus"></i> 
+                  
+                   Ajouter
+                </button>
+              </div>
+              <textarea id="description-input" placeholder="Description des tâche..." 
+                        class="mb-4 p-3 border border-gray-300 rounded-lg w-full"></textarea>
+                        <div class="flex space-x-4">
+                            <input type="date" id="due-date" class="p-2 border border-gray-300 rounded-lg">
+                            <select id="priority" class="p-2 border border-gray-300 rounded-lg">
+                              <option value="low">Priorité Basse</option>
+                              <option value="medium">Priorité Moyenne</option>
+                              <option value="high">Priorité Élevée</option>
+                            </select>
+                            <select id="project" class="p-2 border border-gray-300 rounded-lg">
+                              <option value="personal">Personnel</option>
+                              <option value="work">Travail</option>
+                              <option value="study">Étude</option>
+                            </select>
+                          </div>
+                          
+            </form>
+    
+            <div class="mb-4 flex justify-between">
+              <div>
+                <button id="sort-priority" class="bg-purple-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-purple-600 transition duration-300 ease-in-out">
+                  <i class="fas fa-sort-amount-down"></i>  Priorité  
+                </button>
+                <button id="sort-date" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">
+                  <i class="fas fa-calendar-alt"></i> Date
+                </button>
+              </div>
+              <div>
+                <button id="view-all" class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-600 transition duration-300 ease-in-out">Tout</button>
+                <button id="view-active" class="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2 hover:bg-yellow-600 transition duration-300 ease-in-out"> Actif </button>
+                <button id="view-completed" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300 ease-in-out">  Terminé</button>
+              </div>
+            </div>
+    
+            <ul id="task-list" class="task-list space-y-2">
+              <!-- Tasks will be added here dynamically -->
+            </ul>
+          </div>
+        </div>
+        
+        <button id="add-task-btn" class="fixed bottom-8 right-8 bg-orange-500 text-white rounded-full p-4 shadow-lg hover:bg-orange-600 transition duration-300 ease-in-out">
+          <i class="fas fa-plus text-2xl"></i>
+        </button>
+    
+        <!-- Statistics and Productivity Column -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+          <h2 class="text-2xl font-semibold mb-4 text-indigo-700">Statistiques de productivité</h2>
+          <canvas id="productivity-chart" width="400" height="200"></canvas>
+          <div id="stats" class="mt-6 space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Tâches accomplies aujourd’hui :</span>
+              <span id="completed-today" class="text-green-600 font-bold">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Tâches restantes :</span>
+              <span id="tasks-remaining" class="text-red-600 font-bold">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Score de productivité :</span>
+              <span id="productivity-score" class="text-indigo-600 font-bold">0%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Terminé cette semaine :</span>
+              <span id="completed-this-week" class="text-blue-600 font-bold">0</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Taux d’achèvement global :</span>
+              <span id="completion-rate" class="text-purple-600 font-bold">0%</span>
+            </div>
+          </div>
+          <canvas id="weekly-progress-chart" width="400" height="200" class="mt-6"></canvas>
+        </div>
+      </div>
+    
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const form = document.getElementById('task-form');
+          const taskInput = document.getElementById('task-input');
+          const descriptionInput = document.getElementById('description-input');
+          const taskList = document.getElementById('task-list');
+          const dueDateInput = document.getElementById('due-date');
+          const prioritySelect = document.getElementById('priority');
+          const projectSelect = document.getElementById('project');
+          const sortPriorityBtn = document.getElementById('sort-priority');
+          const sortDateBtn = document.getElementById('sort-date');
+          const viewAllBtn = document.getElementById('view-all');
+          const viewActiveBtn = document.getElementById('view-active');
+          const viewCompletedBtn = document.getElementById('view-completed');
+    
+          let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+          let currentView = 'all';
+    
+          const saveTasks = () => {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+          };
+    
+          const renderTasks = () => {
+            taskList.innerHTML = '';
+            let filteredTasks = tasks;
+            if (currentView === 'active') {
+              filteredTasks = tasks.filter(task => !task.completed);
+            } else if (currentView === 'completed') {
+              filteredTasks = tasks.filter(task => task.completed);
+            }
+            filteredTasks.forEach((task, index) => {
+              const li = document.createElement('li');
+              li.className = `slide-in flex items-center justify-between p-3 bg-white rounded-lg shadow-sm ${task.completed ? 'completed' : ''}`;
+              li.innerHTML = `
+                <div class="flex items-center space-x-3">
+                  <input type="checkbox" ${task.completed ? 'checked' : ''} class="form-checkbox h-5 w-5 text-blue-600">
+                  <div class="task-details">
+                    <span class="text-black font-medium">${task.text}</span>
+                    <div class="text-gray-400 text-sm">${task.dueDate}</div>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-sm px-2 py-1 rounded-full ${getPriorityColor(task.priority)}">${task.priority}</span>
+                  <button class="edit-btn text-blue-500 hover:text-blue-700">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="delete-btn text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              `;
+    
+              const checkbox = li.querySelector('input[type="checkbox"]');
+              checkbox.addEventListener('change', () => {
+                task.completed = checkbox.checked;
+                li.classList.toggle('completed');
+                saveTasks();
+                updateStats();
+              });
+    
+              const editBtn = li.querySelector('.edit-btn');
+              editBtn.addEventListener('click', () => {
+                const newText = prompt('Edit task:', task.text);
+                const newDescription = prompt('Edit description:', task.description);
+                if (newText !== null) {
+                  task.text = newText.trim();
+                  task.description = newDescription.trim();
+                  renderTasks();
+                  saveTasks();
+                }
+              });
+    
+              const deleteBtn = li.querySelector('.delete-btn');
+              deleteBtn.addEventListener('click', () => {
+                tasks.splice(index, 1);
+                renderTasks();
+                saveTasks();
+                updateStats();
+              });
+    
+              taskList.appendChild(li);
+            });
+            updateStats();
+          };
+    
+          const getPriorityColor = (priority) => {
+            switch (priority) {
+              case 'high': return 'bg-red-200 text-red-800';
+              case 'medium': return 'bg-yellow-200 text-yellow-800';
+              case 'low': return 'bg-green-200 text-green-800';
+              default: return 'bg-gray-200 text-gray-800';
+            }
+          };
+    
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (taskInput.value.trim() === '') return;
+    
+            const newTask = {
+              text: taskInput.value.trim(),
+              description: descriptionInput.value.trim(),
+              completed: false,
+              dueDate: dueDateInput.value || 'No date',
+              priority: prioritySelect.value,
+              project: projectSelect.value,
+              tags: [],
+              assignedTo: null,
+              reminders: []
+            };
+    
+            tasks.push(newTask);
+            taskInput.value = '';
+            descriptionInput.value = '';
+            dueDateInput.value = '';
+            prioritySelect.value = 'low';
+            projectSelect.value = 'personal';
+            renderTasks();
+            saveTasks();
+          });
+    
+          sortPriorityBtn.addEventListener('click', () => {
+            tasks.sort((a, b) => {
+              const priorityOrder = { high: 3, medium: 2, low: 1 };
+              return priorityOrder[b.priority] - priorityOrder[a.priority];
+            });
+            renderTasks();
+          });
+    
+          sortDateBtn.addEventListener('click', () => {
+            tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+            renderTasks();
+          });
+    
+          viewAllBtn.addEventListener('click', () => {
+            currentView = 'all';
+            renderTasks();
+          });
+    
+          viewActiveBtn.addEventListener('click', () => {
+            currentView = 'active';
+            renderTasks();
+          });
+    
+          viewCompletedBtn.addEventListener('click', () => {
+            currentView = 'completed';
+            renderTasks();
+          });
+    
+          const updateStats = () => {
+            const completedToday = tasks.filter(task => 
+              task.completed && new Date(task.dueDate).toDateString() === new Date().toDateString()
+            ).length;
+            const remaining = tasks.filter(task => !task.completed).length;
+            const completedThisWeek = tasks.filter(task => 
+              task.completed && isThisWeek(new Date(task.dueDate))
+            ).length;
+            const totalTasks = tasks.length;
+            const productivityScore = totalTasks > 0 ? Math.round((completedToday / totalTasks) * 100) : 0;
+            const completionRate = totalTasks > 0 ? Math.round((completedThisWeek / totalTasks) * 100) : 0;
+    
+            document.getElementById('completed-today').textContent = completedToday;
+            document.getElementById('tasks-remaining').textContent = remaining;
+            document.getElementById('productivity-score').textContent = `${productivityScore}%`;
+            document.getElementById('completed-this-week').textContent = completedThisWeek;
+            document.getElementById('completion-rate').textContent = `${completionRate}%`;
+    
+            updateChart(completedToday, remaining);
+            updateCharts(completedThisWeek, completionRate);
+          };
+    
+          let productivityChart;
+    
+          const updateChart = (completed, remaining) => {
+            const ctx = document.getElementById('productivity-chart').getContext('2d');
+            
+            if (productivityChart) {
+              productivityChart.destroy();
+            }
+    
+            productivityChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Completed', 'Remaining'],
+                datasets: [{
+                  data: [completed, remaining],
+                  backgroundColor: ['#4CAF50', '#FFC107'],
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                  position: 'bottom',
+                },
+                title: {
+                  display: true,
+                  text: 'Task Progress'
+                }
+              }
+            });
+          };
+    
+          const updateCharts = (completedThisWeek, completionRate) => {
+            const weeklyCtx = document.getElementById('weekly-progress-chart').getContext('2d');
+            new Chart(weeklyCtx, {
+              type: 'bar',
+              data: {
+                labels: ['Completed This Week', 'Completion Rate'],
+                datasets: [{
+                  data: [completedThisWeek, completionRate],
+                  backgroundColor: ['#4CAF50', '#2196F3'],
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: 100
+                  }
+                }
+              }
+            });
+          };
+    
+          const isThisWeek = (date) => {
+            const now = new Date();
+            const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(endOfWeek.getDate() + 7);
+            return date >= startOfWeek && date < endOfWeek;
+          };
+    
+          renderTasks();
+          scheduleReminders();
+        });
+    
+        const scheduleReminders = () => {
+          tasks.forEach(task => {
+            task.reminders.forEach(reminder => {
+              const now = new Date();
+              const reminderTime = new Date(reminder);
+              if (reminderTime > now) {
+                setTimeout(() => {
+                  alert(`Reminder: ${task.text} is due soon!`);
+                }, reminderTime - now);
+              }
+            });
+          });
+        };
+      </script>
+    </body></html>
+{% endblock %}
