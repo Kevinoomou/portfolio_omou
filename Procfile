@@ -1,1 +1,1 @@
-web: gunicorn kevin_omou.wsgi --log-file -
+web: gunicorn nom_du_projet.wsgi --log-file -
