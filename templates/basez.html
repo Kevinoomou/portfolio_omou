@@ -8,44 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
     {% block title %}{% endblock title %}
-    <link rel="stylesheet" href="{% static 'output.css' %}">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
     body {
-      font-family: 'Poppins', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
     .gradient-bg {
-      background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
     }
     .gradient-text {
-      background: linear-gradient(90deg, #4F46E5, #7C3AED);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+        background: linear-gradient(90deg, #4F46E5, #7C3AED);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
-  </style>
+</style>
 
 <body class="bg-gray-100 text-gray-800">
- 
-   
-        {% include 'projet/nf/navz.html' %}
- 
-   
-    
-   
-
+    {% include 'projet/nf/navz.html' %}
         {% block content %}
         <!-- Contenu spécifique à chaque page -->
         {% endblock content %}
- 
     <!-- footer  Pied de page commun à toutes les pages -->
     {% include 'projet/nf/footerz.html' %}
 
     <!-- Scripts JavaScript -->
     <script src="{% static 'js/scripts.js' %}"></script>
-  </body>
+</body>
 
 
 
