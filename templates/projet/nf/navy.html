@@ -1,35 +1,117 @@
 {% load static %}
 
-<head>
+
+
+  <html><head><base >
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-  <body >
-    <header class="bg-white shadow-sm">
-        <nav class="container mx-auto px-6 py-3">
-          <div class="flex justify-between items-center">
-            <div class="flex items-center">
-              <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              <span class="ml-2 text-2xl  font-extrabold text-gray-800"> <a href="{%url 'Projecty'%}">LinkMaster</a></span>
+    <title>Démo du Projet Z - Jace Smith</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827;
+            color: #e5e7eb;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+    
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+    </style>
+    </head>
+    <body class="min-h-screen flex flex-col">
+        <header class="bg-gray-100 shadow-lg sticky top-0 z-50">
+            <nav class="container mx-auto md:px-4 md:py-4">
+                <div class="flex justify-between items-center">
+                  <div class="flex items-center">
+                    <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>
+                    <span class="ml-2 text-xl md:text-2xl  font-extrabold text-gray-800"> <a href="{%url 'Projecty'%}">LinkMaster</a></span>
+                  </div>
+                    <div class="hidden md:flex  md:space-x-4">
+                      <a href="{%url 'home'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300"> Mon porfolio</a>
+                      <a href="{%url 'feature'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Features</a>
+                      <a href="{%url 'Prix'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Prix</a>
+                      <a href="{%url 'api'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">API</a>
+                      <a href="#" class="text-gray-600 hover:text-indigo-500 font-extrabold transition duration-300">Connectez-vous
+                      </a>
+                      <a href="#" class="bg-indigo-600 font-extrabold text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">S’enregistrer</a>
+                    </div>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-gray-800 fixed top-0 left-0 w-64 h-full z-40 overflow-y-auto">
+                <div class="p-4">
+                    <button id="close-mobile-menu" class="mb-4 text-gray-300 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                    <div class="flex flex-col space-y-4">
+                        
+                        <a href="{%url 'home'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300"> Mon porfolio</a>
+                      <a href="{%url 'feature'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Features</a>
+                      <a href="{%url 'Prix'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Prix</a>
+                      <a href="{%url 'api'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">API</a>
+                      <a href="#" class="text-gray-600 hover:text-indigo-500 font-extrabold transition duration-300">Connectez-vous
+                      </a>
+                      <a href="#" class="bg-indigo-600 font-extrabold text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">S’enregistrer</a>
+                    </div>
+                </div>
             </div>
-            <div class="text-center">
-                <a href="{%url 'home'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300"> Mon porfolio</a>
-            </div>
-            <div class="flex space-x-4">
-              <a href="{%url 'feature'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Features</a>
-              
-              <a href="{%url 'Prix'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">Prix</a>
-              <a href="{%url 'api'%}" class="text-gray-600 font-extrabold hover:text-indigo-500 transition duration-300">API</a>
-              <a href="#" class="text-gray-600 hover:text-indigo-500 font-extrabold transition duration-300">Connectez-vous
-            </a>
-              <a href="#" class="bg-indigo-600 font-extrabold text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300">S’enregistrer</a>
-            </div>
-          </div>
-        </nav>
-      </header>
-  </body>
+        </header>
+    
+
+    
+
+    
+        <script>
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+    
+            function toggleMobileMenu() {
+                mobileMenu.classList.add('active');
+            }
+    
+            mobileMenuButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleMobileMenu();
+            });
+    
+            closeMobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+    
+            document.addEventListener('click', (event) => {
+                if (!mobileMenu.contains(event.target) && event.target !== mobileMenuButton) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+    
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+        </script>
+    </body></html>

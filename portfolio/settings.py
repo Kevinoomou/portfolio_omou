@@ -29,10 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tl@33i74vln1-3^d1ra^d0sba*#9=()8wtx!&h875ynalg%_7k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEBUG' in os.environ
+DEBUG = True
 
-
-ALLOWED_HOSTS = ['portfolio_omou.herokuapp.com', 'localhost']
+#ALLOWED_HOSTS = ['portfolio_omou.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = []
 
 
 
@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'
